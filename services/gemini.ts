@@ -35,7 +35,7 @@ export const analyzeAudiogramImage = async (base64Image: string, mimeType: strin
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-2.5-flash',
       contents: {
         parts: [
           { inlineData: { mimeType, data: base64Image } },
@@ -106,11 +106,8 @@ export const generateThesisAnalysis = async (patients: Patient[]) => {
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-2.5-flash',
       contents: prompt,
-      config: {
-        thinkingConfig: { thinkingBudget: 32768 } // Max thinking for deep analysis
-      }
     });
 
     return response.text;
@@ -133,7 +130,7 @@ export const searchMedicalLiterature = async (query: string) => {
         tools: [{ googleSearch: {} }]
       }
     });
-    
+
     return {
       text: response.text,
       groundingMetadata: response.candidates?.[0]?.groundingMetadata
