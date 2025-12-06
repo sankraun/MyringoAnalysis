@@ -1,0 +1,5 @@
+{
+  "name": "MyringoAnalysis AI",
+  "description": "A thesis companion app for Endoscopic Cartilage Myringoplasty data entry, AI-powered audiogram analysis, and outcome comparison (TFG vs NTFG).",
+  "requestFramePermissions": []
+}
