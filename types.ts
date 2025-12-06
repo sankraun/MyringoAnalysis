@@ -41,13 +41,13 @@ export interface Patient {
   religion: string;
   education: string;
   bmi: number;
-  
+
   // Clinical
   operationDate?: string; // ISO Date String YYYY-MM-DD
   operatedEar: 'Right' | 'Left'; // New field
   group: SurgeryGroup; // TFG or NTFG
   diagnosis: string;
-  
+
   // Pre-Op
   preOpOtoscopy: {
     right: OtoscopyFindings;
@@ -70,10 +70,17 @@ export interface Patient {
   postOp12WeeksAudiometry: AudiometryResult;
 }
 
-export const INITIAL_FREQUENCIES: Frequencies = { f500: 0, f1k: 0, f2k: 0, f4k: 0, avg: 0 };
-export const INITIAL_EAR_DATA: EarData = { airConduction: { ...INITIAL_FREQUENCIES }, boneConduction: { ...INITIAL_FREQUENCIES }, airBoneGap: 0 };
-export const INITIAL_AUDIOMETRY: AudiometryResult = { right: { ...INITIAL_EAR_DATA }, left: { ...INITIAL_EAR_DATA } };
-export const INITIAL_OTOSCOPY: OtoscopyFindings = { perforationSize: '', quadrant: '' };
+export const createInitialFrequencies = (): Frequencies => ({ f500: 0, f1k: 0, f2k: 0, f4k: 0, avg: 0 });
+export const createInitialEarData = (): EarData => ({ airConduction: createInitialFrequencies(), boneConduction: createInitialFrequencies(), airBoneGap: 0 });
+export const createInitialAudiometry = (): AudiometryResult => ({ right: createInitialEarData(), left: createInitialEarData() });
+export const createInitialOtoscopy = (): OtoscopyFindings => ({ perforationSize: '', quadrant: '' });
+
+// Keep constants for backward compatibility if needed, but they are dangerous if mutated.
+// Better to remove them and update usage.
+export const INITIAL_FREQUENCIES = createInitialFrequencies();
+export const INITIAL_EAR_DATA = createInitialEarData();
+export const INITIAL_AUDIOMETRY = createInitialAudiometry();
+export const INITIAL_OTOSCOPY = createInitialOtoscopy();
 
 // Helper to calculate averages
 export const calculateAverage = (freq: Frequencies): number => {
